@@ -1,30 +1,40 @@
-const cityInput = document.querySelector("input[type='text']")
+import getData from "./getData.js"
+
+export const cityInput = document.querySelector("input[type='text']")
 const btn = document.querySelector("button")
 const description = document.querySelector(".desc-text")
 const temp = document.querySelector(".temp")
 const cityName = document.querySelector(".city span")
+const feelsLike = document.querySelector(".f-like")
+const tempCont = document.querySelector(".temperature");
 
-function setTexts(elem, data) {
-  elem.innerText = typeof data === "number" && data % 1 >= .5
-    ?Math.ceil(data)
-    :typeof data === "string"
-    ?data:Math.floor(data)
+let Celcius = true
+
+function convertTemp(data) {
+  const unit = Celcius
+    ?data
+    :(data * 9) / 5 + 32
+  const rounded = Math.round(unit)
+  return `${rounded}${Celcius?"°C":"°F"}`
 }
 
-function setTemp(data) {
+function setTexts(elem, data) { 
+  elem.innerText = typeof data === "number"
+    ?convertTemp(data)
+    :data
+}
+
+export function setTemp(data) {
   setTexts(description, data.weather[0].description)
-  setTexts(temp, data.main.temp)
   setTexts(cityName, data.name)
+  setTexts(feelsLike, data.main.feels_like)
+  setTexts(temp, data.main.temp)
 }
 
-async function getData() {
-  try {
-    const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityInput.value}&appid=12793f8ac81bc147899e9e407bbe4fb6&units=metric`)
-    const l = await response.json()
-    setTemp(l)
-    console.log(l);
-  } catch (err) {
-  }
+function changeUnit() {
+  Celcius = !Celcius
+  getData()
 }
 
 btn.addEventListener("click",getData)
+tempCont.addEventListener("click", changeUnit)
