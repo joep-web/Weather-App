@@ -13,9 +13,9 @@ function setDates(mm, dWeek, dd) {
 function getDates(dt, tmz) {
   const s = parseInt(dt, 10) + parseInt(tmz, 10)
   const ms = s * 1000
-  const cMonth = new Date(ms).getMonth()
-  const cDay = new Date(ms).getDay()
-  const cDate = new Date(ms).getDate()
+  const cMonth = new Date(ms).getUTCMonth()
+  const cDay = new Date(ms).getUTCDay()
+  const cDate = new Date(ms).getUTCDate()
   setDates(cMonth, cDay, cDate)
 }
 
