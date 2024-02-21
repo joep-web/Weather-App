@@ -1,5 +1,6 @@
 import {setTemp, cityInput} from "./script.js"
 import setImage from "./imageDescription.js"
+import setDate from "./dates.js"
 
 export default async function getData() {
   try {
@@ -7,6 +8,7 @@ export default async function getData() {
     const l = await response.json()
     setTemp(l)
     setImage(l.weather[0].icon)
+    setDate(l)
     console.log(l);
   } catch (err) {
   }

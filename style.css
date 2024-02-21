@@ -112,6 +112,7 @@ main > * {
 .desc-img {
   height: 65%;
   width: 65%;
+  transition: all 0.5s ease-in-out;
 }
 
 .temp {
